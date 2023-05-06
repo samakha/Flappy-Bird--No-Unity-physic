@@ -23,7 +23,9 @@ public class Pipe : MonoBehaviour
     {
         if ( this.gameObject.transform.position.x < -10f )
         {
-            transform.position = new Vector3(10f, Random.Range(-1,1), transform.position.z); 
+            transform.position = new Vector3(10f, Random.Range(-1.3f,1.1f), transform.position.z); 
         }
     }
+
+ 
 }
