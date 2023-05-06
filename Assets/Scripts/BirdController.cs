@@ -22,18 +22,18 @@ public class BirdController : MonoBehaviour
         ApplyGravity(); 
         if(Input.GetKeyDown(KeyCode.Space))
             {
-            gravity = -10f;
+            gravity = -9f;
             ApplyGravity(); 
           
             }
         if( Input.GetKeyUp(KeyCode.Space))
         {
-            gravity = 29f;
+            gravity = 35f;
             ApplyGravity(); 
         }
         else
         {
-            gravity = -1.2f; 
+            gravity = -2.2f; 
         }
     }
     private void ApplyGravity( )
