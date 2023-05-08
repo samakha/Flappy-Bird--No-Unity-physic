@@ -24,7 +24,7 @@ public class Pipe : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z); 
         }
-      
+
     }
 
     private void CheckForRespawn( )

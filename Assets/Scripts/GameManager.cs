@@ -12,17 +12,23 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public BirdController birdController;
+    private Pipe[] pipes; 
 
     public GameObject scorePanel;
-    public GameObject guideText; 
+    public GameObject guideText;
+
+    public bool levelUp; 
     private  int score;
+    private int hightScore;
+
     public TextMeshProUGUI  scoreText; 
     public TextMeshProUGUI  scoreOverPanelText; 
-    public TextMeshProUGUI  highScoreText; 
-    private static int hightScore; 
+    public TextMeshProUGUI  highScoreText;
+    
     private void Awake()
     {
         Instance = this; 
+        
     }
 
     void Start()
@@ -32,6 +38,9 @@ public class GameManager : MonoBehaviour
         state = GameplayState.Intro;
         score = 0;
         birdController = GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdController>();
+      
+       
+
         highScoreText.text = PlayerPrefs.GetInt("hightScore",0).ToString();
     }
 
@@ -49,9 +58,11 @@ public class GameManager : MonoBehaviour
         if( Input.GetKeyDown(KeyCode.Space) && state!=GameplayState.GameOver) // starting play after press space button
         {
             state = GameplayState.Playing;
+            SoundManager.Instance.PlaySoundWingClip(); 
             guideText.SetActive(false); 
            //   birdController.isPlaying = true; 
         }
+        highScoreText.text = PlayerPrefs.GetInt("highScore", 0).ToString();
     }
     public void AddScore( ) // add score and check for high score
     {
@@ -60,10 +71,10 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         scoreOverPanelText.text = score.ToString();
 
-        if (score > PlayerPrefs.GetInt("hightScore",0))
+        if (score > PlayerPrefs.GetInt("highScore",0))
         {
-            PlayerPrefs.SetInt("hightScore", score);
-            highScoreText.text = score.ToString(); 
+            PlayerPrefs.SetInt("highScore", score);
+            highScoreText.text = PlayerPrefs.GetInt("highScore", 0).ToString()  ; 
         }
     }
   
@@ -78,5 +89,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
+
+  
 
 }

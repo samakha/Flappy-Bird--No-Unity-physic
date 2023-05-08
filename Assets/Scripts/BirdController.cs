@@ -18,7 +18,8 @@ public class BirdController : MonoBehaviour
     private float flyTimer;
     public float defaultFlyTimer = .5f; 
     private bool onFly;
-    public float multi; 
+    public float multi;
+    public float rotateSpeed;
 
    public bool isPlaying;  
 
@@ -40,8 +41,9 @@ public class BirdController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 multi = 0;
-                gravity = 20f;
-                transform.eulerAngles = new Vector3(0, 0, 40f); // rotating bird with 40 degrees
+                gravity = 19f;
+                transform.eulerAngles = new Vector3(0, 0, 70f * Time.deltaTime ) * rotateSpeed; // rotating bird with 40 degrees
+             //     SoundManager.Instance.PlaySoundWingClip(); 
             }
 
             else
@@ -73,6 +75,7 @@ public class BirdController : MonoBehaviour
                   ( birdY+ Constant.birdHeight/2<= pipeY-Constant.distanceBetweenPipe/2+.4f || birdY+Constant.birdHeight/2 >=pipeY+Constant.distanceBetweenPipe/2) || 
                    (birdY<=Constant.groundY || birdY>=Constant.topY))  
                    {
+                         SoundManager.Instance.PlaySoundHitClip(); 
                          GameManager.Instance.GameOver(); 
                     }
 
