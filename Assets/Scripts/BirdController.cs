@@ -6,7 +6,7 @@ public class BirdController : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] float gravity = 1.2f;
-    [SerializeField] float forceBird = 3f;
+   // [SerializeField] float forceBird = 3f;
 
     //public GameObject pipe1; 
     //public GameObject pipe2; 
@@ -17,26 +17,40 @@ public class BirdController : MonoBehaviour
 
     private float flyTimer;
     public float defaultFlyTimer = .5f; 
-    private bool onFly; 
+    private bool onFly;
+
+   public bool isPlaying;  
 
     void Start()
     {
-        flyTimer = defaultFlyTimer; 
+        flyTimer = defaultFlyTimer;
+        isPlaying = false; 
     }
 
     // Update is called once per frame
     void Update()
-    { 
-        birdX = transform.position.x;
-        birdY = transform.position.y; 
-        DetectCollider(); 
-        ApplyGravity(); 
-        if (Input.GetKey(KeyCode.Space)) {
-            gravity = 24f;
-                }     
-        else
+    {
+       if( GameManager.Instance.state == GameManager.GameplayState.Playing)
         {
-            gravity = -3f; 
+            birdX = this.transform.position.x;
+            birdY = this.transform.position.y;
+            DetectCollider();
+            ApplyGravity();
+            if (Input.GetKey(KeyCode.Space))
+            {
+                gravity = 20f;
+                transform.eulerAngles = new Vector3(0, 0, 40f); // rotating bird with 40 degrees
+            }
+
+            else
+            {
+                gravity = -4f;
+                transform.eulerAngles = new Vector3(0, 0, 0);  // reset rotate
+            }
+        }
+       else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
     private void ApplyGravity( )
@@ -52,12 +66,16 @@ public class BirdController : MonoBehaviour
             float  pipeX = pipeList[i].gameObject.transform.position.x; 
             float pipeY = pipeList[i].gameObject.transform.position.y;
 
-               if ((birdX+Constant.birdWidth/2 >= pipeX-Constant.pipeWidth/2 && birdX+ Constant.birdWidth/2 <= pipeX+Constant.pipeWidth)   &&  
-                  ( birdY+Constant.birdHeight/2<= pipeY-Constant.distanceBetweenPipe || birdY+Constant.birdHeight/2 >=pipeY+Constant.distanceBetweenPipe)  )
+               if ((birdX+Constant.birdWidth/2 >= pipeX-Constant.pipeWidth/2 && birdX+ Constant.birdWidth/2 <= pipeX+Constant.pipeWidth/2)   &&  
+                  ( birdY+ Constant.birdHeight/2<= pipeY-Constant.distanceBetweenPipe/2+.4f || birdY+Constant.birdHeight/2 >=pipeY+Constant.distanceBetweenPipe/2) || 
+                   (birdY<=Constant.groundY || birdY>=Constant.topY))  
                    {
-                        Debug.Log("dead"); 
+                         GameManager.Instance.GameOver(); 
                     }
+
         }
        
     }
+
+   
 }
