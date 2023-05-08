@@ -18,6 +18,7 @@ public class BirdController : MonoBehaviour
     private float flyTimer;
     public float defaultFlyTimer = .5f; 
     private bool onFly;
+    public float multi; 
 
    public bool isPlaying;  
 
@@ -38,13 +39,15 @@ public class BirdController : MonoBehaviour
             ApplyGravity();
             if (Input.GetKey(KeyCode.Space))
             {
+                multi = 0;
                 gravity = 20f;
                 transform.eulerAngles = new Vector3(0, 0, 40f); // rotating bird with 40 degrees
             }
 
             else
             {
-                gravity = -4f;
+                multi += -0.1f;
+                gravity = -4f+multi;  //  ADD ACCELERATION
                 transform.eulerAngles = new Vector3(0, 0, 0);  // reset rotate
             }
         }
