@@ -42,7 +42,7 @@ public class BirdController : MonoBehaviour
             {
                 multi = 0;
                 gravity = 19f;
-                transform.eulerAngles = new Vector3(0, 0, 70f * Time.deltaTime ) * rotateSpeed; // rotating bird with 40 degrees
+                transform.eulerAngles = new Vector3(0, 0, 50f * Time.deltaTime ) * rotateSpeed; // rotating bird with 40 degrees
              //     SoundManager.Instance.PlaySoundWingClip(); 
             }
 
@@ -53,7 +53,7 @@ public class BirdController : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, 0);  // reset rotate
             }
         }
-       else
+       else   // stop bird when state != playing
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }

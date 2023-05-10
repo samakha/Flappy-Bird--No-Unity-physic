@@ -38,46 +38,34 @@ public class GameManager : MonoBehaviour
         state = GameplayState.Intro;
         score = 0;
         birdController = GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdController>();
-      
-       
-
         highScoreText.text = PlayerPrefs.GetInt("hightScore",0).ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartGame(); 
-    }
-    public void StartGame( ) 
-    {
-        if (state !=  GameplayState.Intro) //  display intro text
-        {
-            
-        }
-        if( Input.GetKeyDown(KeyCode.Space) && state!=GameplayState.GameOver) // starting play after press space button
+        if (Input.GetKeyDown(KeyCode.Space) && state != GameplayState.GameOver) // starting play after press space button
         {
             state = GameplayState.Playing;
-            SoundManager.Instance.PlaySoundWingClip(); 
-            guideText.SetActive(false); 
-           //   birdController.isPlaying = true; 
+            SoundManager.Instance.PlaySoundWingClip();
+            guideText.SetActive(false);
+            //   birdController.isPlaying = true; 
         }
         highScoreText.text = PlayerPrefs.GetInt("highScore", 0).ToString();
     }
-    public void AddScore( ) // add score and check for high score
-    {
+    public void AddScore( )
+{
         Debug.Log("score : " + score);
         score++;
         scoreText.text = score.ToString();
         scoreOverPanelText.text = score.ToString();
 
-        if (score > PlayerPrefs.GetInt("highScore",0))
+        if (score > PlayerPrefs.GetInt("highScore", 0))
         {
             PlayerPrefs.SetInt("highScore", score);
-            highScoreText.text = PlayerPrefs.GetInt("highScore", 0).ToString()  ; 
+            highScoreText.text = PlayerPrefs.GetInt("highScore", 0).ToString();
         }
-    }
-  
+    }  
     public void GameOver()
     {
         state = GameplayState.GameOver;
@@ -89,7 +77,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
+ }
+  
+  
+ 
 
   
 
-}
+
+
+
